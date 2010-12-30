@@ -1,0 +1,6 @@
+[submodule "vendor/facebook"]
+	path = vendor/facebook
+	url = git://github.com/facebook/php-sdk.git
+[submodule "web/js/facebook"]
+	path = web/js/facebook
+	url = git://github.com/facebook/connect-js.git
