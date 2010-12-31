@@ -1,0 +1,16 @@
+sfGuardUserFacebookProfile:
+  columns:
+    user_id:          integer
+    first_name:       varchar(255)
+    last_name:        varchar(255)
+    facebook_uid:     string(255)
+    email_hash:       varchar(255)
+  relations:
+    sfGuardUser:
+      type: one
+      foreignType: one
+      class: sfGuardUser
+      local: user_id
+      foreign: id
+      onDelete: cascade
+      foreignAlias: FacebookProfile

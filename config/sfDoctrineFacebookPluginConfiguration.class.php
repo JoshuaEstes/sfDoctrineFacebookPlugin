@@ -10,12 +10,39 @@
  */
 class sfDoctrineFacebookPluginConfiguration extends sfPluginConfiguration
 {
-  const VERSION = '1.0.0-DEV';
+
+  private $_facebook = null;
 
   /**
    * @see sfPluginConfiguration
    */
   public function initialize()
   {
+    $this->dispatcher->connect('context.method_not_found', array($this, 'listenToContextMethodNotFoundEvent'));
+
+    if (sfConfig::get('app_sf_facebook_load_routing', true))
+    {
+      $this->dispatcher->connect('routing.load_configuration', array('sfFacebookRouting', 'listenToLoadConfigurationEvent'));
+    }
   }
+
+  public function listenToContextMethodNotFoundEvent(sfEvent $event)
+  {
+    $parameters = $event->getParameters();
+    if ('getFacebook' != $parameters['method'])
+      return false;
+
+    if (null != $this->_facebook)
+    {
+      $event->setReturnValue($this->_facebook);
+      return true;
+    }
+
+    require_once sfConfig::get('sf_lib_dir') . '/vendor/facebook/src/facebook.php';
+    $this->_facebook = new sfFacebook($this->dispatcher);
+    $event->setReturnValue($this->_facebook);
+    $this->dispatcher->notify(new sfEvent($this, 'facebook.configure'));
+    return true;
+  }
+
 }

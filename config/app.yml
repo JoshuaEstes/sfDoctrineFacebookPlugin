@@ -1,0 +1,22 @@
+# if you are in the dev environment, then it can load debug tools
+dev:
+  sf_facebook_plugin:
+    debug: true
+
+all:
+  sf_facebook_plugin:
+    app_id: 11111111111
+    api_key: 2222222222222222222
+    app_secret: 33333333333333333333
+    # load facebook routes, defualt is true
+#    load_routing: true
+    login_module: sfFacebookAuth
+    login_action: login
+    parse_xfbml: true
+    # debug is default to false
+#    debug: false
+    remember_cookie_name: sfFacebookRememberMe
+    # if for some reason you want to change this
+#    cookie_domain: www.example.com
+    # in case you want to enable uploads
+#    enable_fileuploads: false
