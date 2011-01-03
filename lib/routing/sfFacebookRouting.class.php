@@ -6,14 +6,14 @@ class sfFacebookRouting
   static public function listenToLoadConfigurationEvent(sfEvent $event)
   {
     $routing = $event->getSubject();
-    $routing->prependRoute('sf_facebook_signin', new sfRoute('/facebook/signin', array(
+    $routing->prependRoute('sf_facebook_signin', new sfRoute('/facebook/login', array(
       'module' => 'sfFacebookAuth',
-      'action' => 'signin',
+      'action' => 'login',
     )));
-//    $routing->prependRoute('sf_facebook_connect_ajax_signin', new sfRoute('/fb-connect/ajax-signin', array(
-//      'module' => 'sfFacebookConnectAuth',
-//      'action' => 'ajaxSignin',
-//    )));
+    $routing->prependRoute('sf_facebook_deauthorize', new sfRoute('/facebook/deauthorize', array(
+      'module' => 'sfFacebookAuth',
+      'action' => 'deauthorize',
+    )));
   }
 
 }

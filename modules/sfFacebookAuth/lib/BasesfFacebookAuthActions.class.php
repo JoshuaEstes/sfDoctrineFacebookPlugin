@@ -10,8 +10,13 @@
  */
 abstract class BasesfFacebookAuthActions extends sfActions
 {
-  public function executeLogin()
+  public function executeLogin(sfWebRequest $request)
   {
 
+  }
+
+  public function executeDeauthorize(sfWebRequest $request)
+  {
+    return sfView::NONE;
   }
 }

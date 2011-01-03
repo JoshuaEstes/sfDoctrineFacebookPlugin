@@ -24,6 +24,11 @@ class sfDoctrineFacebookPluginConfiguration extends sfPluginConfiguration
     {
       $this->dispatcher->connect('routing.load_configuration', array('sfFacebookRouting', 'listenToLoadConfigurationEvent'));
     }
+
+    if (sfConfig::get('app_sf_facebook_plugin_debug',false))
+    {
+      $this->dispatcher->connect('debug.web.load_panels', array($this, 'listenToLoadDebugWebPanelEvent'));
+    }
   }
 
   public function listenToContextMethodNotFoundEvent(sfEvent $event)
@@ -43,6 +48,11 @@ class sfDoctrineFacebookPluginConfiguration extends sfPluginConfiguration
     $event->setReturnValue($this->_facebook);
     $this->dispatcher->notify(new sfEvent($this, 'facebook.configure'));
     return true;
+  }
+
+  public function listenToLoadDebugWebPanelEvent(sfEvent $event)
+  {
+    $event->getSubject()->setPanel('facebook',new sfWebDebugPanelFacebook($event->getSubject()));
   }
 
 }

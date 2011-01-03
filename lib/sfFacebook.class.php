@@ -16,8 +16,6 @@ class sfFacebook extends Facebook
   {
     $this->dispatcher = $dispatcher;
 
-    $dispatcher->notify(new sfEvent($this, 'facebook.configure'));
-
     parent::__construct(array(
         'appId' => sfConfig::get('app_sf_facebook_plugin_app_id'),
         'secret' => sfConfig::get('app_sf_facebook_plugin_app_secret'),
@@ -25,5 +23,7 @@ class sfFacebook extends Facebook
         'domain' => sfConfig::get('app_sf_facebook_plugin_cookie_domain',$_SERVER['SERVER_NAME']),
         'fileUpload' => sfConfig::get('app_sf_facebook_plugin_enable_fileuploads',false)
       ));
+
+    $dispatcher->notify(new sfEvent($this, 'facebook.configure'));
   }
 }

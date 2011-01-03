@@ -35,7 +35,7 @@ class sfDoctrineFacebookFilter extends sfFilter
 
     // chceck cookie
     // @todo need to complete this section
-    $cookieName = sfConfig::get('app_sf_facebook_plugin_remember_cookie_name', 'sfRemember');
+    $cookieName = sfConfig::get('app_sf_facebook_plugin_remember_cookie_name', 'sfFacebookRememberMe');
     if (
       $this->isFirstCall()
       &&
@@ -65,8 +65,19 @@ class sfDoctrineFacebookFilter extends sfFilter
       $this->forwardToLoginAction();
     }
 
-//    var_dump($session,$this->getContext()->getFacebook());
-//    die();
+    // check to see if user is in the database
+    if (!$facebook = Doctrine::getTable('sfGuardFacebookUser')->findOneBy('uuid', $this->getContext()->getFacebook()->getUser()))
+    {
+      $details = $this->getContext()->getFacebook()->api('/me');
+      $facebook = new sfGuardFacebookUser();
+      $facebook->uuid = $this->getContext()->getFacebook()->getUser();
+      $facebook->first_name = $details['first_name'];
+      $facebook->last_name = $details['last_name'];
+      $facebook->timezone = $details['timezone'];
+      $facebook->locale = $details['locale'];
+      $facebook->save();
+    }
+    $this->getContext()->getUser()->setAttribute('uuid', $facebook->uuid);
 
     $this->getContext()->getUser()->setAuthenticated(true);
 
