@@ -22,6 +22,8 @@ class sfFacebookUser extends sfGuardSecurityUser
         throw new sfException('The user does not exist anymore in the database.');
       }
     }
+
+    
     return $this->facebookUser;
   }
 }

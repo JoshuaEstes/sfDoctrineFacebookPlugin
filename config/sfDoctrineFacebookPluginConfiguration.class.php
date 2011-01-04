@@ -37,13 +37,13 @@ class sfDoctrineFacebookPluginConfiguration extends sfPluginConfiguration
     if ('getFacebook' != $parameters['method'])
       return false;
 
-    if (null != $this->_facebook)
+    if ($this->_facebook instanceof sfFacebook)
     {
       $event->setReturnValue($this->_facebook);
       return true;
     }
 
-    require_once sfConfig::get('sf_lib_dir') . '/vendor/facebook/src/facebook.php';
+    require_once sfConfig::get('sf_lib_dir').'/vendor/facebook/src/facebook.php';
     $this->_facebook = new sfFacebook($this->dispatcher);
     $event->setReturnValue($this->_facebook);
     $this->dispatcher->notify(new sfEvent($this, 'facebook.configure'));
