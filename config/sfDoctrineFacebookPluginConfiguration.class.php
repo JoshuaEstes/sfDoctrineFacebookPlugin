@@ -8,6 +8,7 @@
  * @author      Joshua Estes
  * @version     SVN: $Id: PluginConfiguration.class.php 17207 2009-04-10 15:36:26Z Kris.Wallsmith $
  */
+
 class sfDoctrineFacebookPluginConfiguration extends sfPluginConfiguration
 {
 
@@ -43,7 +44,7 @@ class sfDoctrineFacebookPluginConfiguration extends sfPluginConfiguration
       return true;
     }
 
-    require_once sfConfig::get('sf_lib_dir').'/vendor/facebook/src/facebook.php';
+
     $this->_facebook = new sfFacebook($this->dispatcher);
     $event->setReturnValue($this->_facebook);
     $this->dispatcher->notify(new sfEvent($this, 'facebook.configure'));

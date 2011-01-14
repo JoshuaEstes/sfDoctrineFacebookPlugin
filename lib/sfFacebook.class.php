@@ -1,5 +1,5 @@
 <?php
-require_once sfConfig::get('sf_lib_dir').'/vendor/facebook/src/facebook.php';
+require_once sfConfig::get('sf_plugins_dir').'/sfDoctrineFacebookPlugin/lib/vendor/facebook/src/facebook.php';
 
 class sfFacebook extends Facebook
 {
